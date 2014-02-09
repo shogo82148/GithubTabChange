@@ -16,10 +16,19 @@ chrome.tabs.query({active: true}, function(tabs) {
 
 save_button.addEventListener('click', function () {
     save();
-    chrome.tabs.reload();
     window.close();
 });
 
+radio_custom.addEventListener('change', save);
+radio_default.addEventListener('change', save);
+tab_custom.addEventListener('change', function() {
+    radio_custom.checked = true;
+    save();
+});
+tab_default.addEventListener('change', function() {
+    radio_default.checked = true;
+    save();
+});
 
 function init(r) {
     console.log(r);
@@ -52,6 +61,7 @@ function save() {
             function() {}
         );
     });
+    chrome.tabs.reload();
 }
 
 function setValue(elem, val) {
