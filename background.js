@@ -3,6 +3,13 @@ var match_url = new RegExp("^https://github.com/([^/]+)/([^/]+)");
 function checkForValidUrl(tabId, changeInfo, tab) {
     var m = match_url.test(tab.url);
     if(!m) return;
+    getSettings({ url: tab.url }, function(r) {
+        var tabsize = r.settings.tabsize || r.default_settings.tabsize || 8;
+        chrome.pageAction.setIcon({
+            tabId: tabId,
+            path: 'icon-' + tabsize + '-19.png'
+        }, null);
+    });
     chrome.pageAction.show(tabId);
 };
 
